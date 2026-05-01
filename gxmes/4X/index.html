@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ant Colony: 4X Lite</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Ant Colony: 4X Lite</h1>
+        <p>Automate resource production with buildable machines, upgrade them, and unlock special modifications.</p>
+    </header>
+
+    <div id="status-grid">
+        <article class="status-card queen-card">
+            <h2>Queen</h2>
+            <div>Eggs: <span id="eggs">5</span></div>
+            <div>Pheromones: <span id="pheromones">0</span></div>
+            <div>Chambers: <span id="chambers">1</span></div>
+        </article>
+        <article class="status-card ant-card">
+            <h2>Ant Colony</h2>
+            <div>Workers: <span id="ants">5</span></div>
+            <div>Soldiers: <span id="soldiers">0</span></div>
+            <div>Hunger Pressure: <span id="hunger-pressure">Low</span></div>
+        </article>
+        <article class="status-card machine-card-summary">
+            <h2>Factory</h2>
+            <div>Built Machines: <span id="machines-built">0</span></div>
+            <div>Active Machines: <span id="machines-active">0</span></div>
+            <div>Total Output: <span id="total-machine-output">0</span>/s</div>
+        </article>
+    </div>
+
+    <div id="resource-grid">
+        <div class="stat">Meat: <span id="meat">50</span></div>
+        <div class="stat">Water: <span id="water">50</span></div>
+        <div class="stat">Leaves: <span id="leaves">20</span></div>
+        <div class="stat">Nectar: <span id="nectar">10</span></div>
+    </div>
+
+    <section id="colony-actions">
+        <h2>Manual Colony Actions</h2>
+        <div id="colony-map">
+            <div class="building" onclick="harvest('meat')">🥩 Forage Meat</div>
+            <div class="building" onclick="harvest('water')">💧 Gather Water</div>
+            <div class="building" onclick="harvest('leaves')">🍃 Collect Leaves</div>
+            <div class="building" onclick="harvest('nectar')">🍯 Harvest Nectar</div>
+            <div class="building wide" onclick="createBrood()">🥚 Create Brood<br><span>15 Leaves + 10 Water</span></div>
+            <div class="building wide" onclick="hatchWorker()">🐜 Hatch Worker<br><span>1 Egg + 10 Meat</span></div>
+            <div class="building wide" onclick="trainSoldier()">🛡️ Train Soldier<br><span>30 Meat + 10 Nectar</span></div>
+            <div class="building wide" onclick="buildChamber()">🏠 Build Chamber<br><span>25 Leaves + 20 Water</span></div>
+            <div class="building wide" onclick="researchPheromones()">🧪 Research Pheromones<br><span>20 Nectar + 2 Eggs</span></div>
+        </div>
+    </section>
+
+    <section id="machines">
+        <h2>Machine Factory</h2>
+        <div id="machine-panel">
+            <article class="machine-card">
+                <h3>🥩 Meat Processor</h3>
+                <div>Status: <span id="meat-machine-status">Locked</span></div>
+                <div>Level: <span id="meat-machine-level">0</span></div>
+                <div>Output: <span id="meat-machine-rate">0</span>/s</div>
+                <div>Special: <span id="meat-machine-special">None</span></div>
+                <div>Build Cost: Leaves 20, Water 12</div>
+                <div>Upgrade Cost: <span id="meat-machine-upgrade">Meat 25, Nectar 10</span></div>
+                <button onclick="buildMachine('meat')">Build Machine</button>
+                <button onclick="upgradeMachine('meat')">Upgrade Machine</button>
+            </article>
+            <article class="machine-card">
+                <h3>💧 Water Condenser</h3>
+                <div>Status: <span id="water-machine-status">Locked</span></div>
+                <div>Level: <span id="water-machine-level">0</span></div>
+                <div>Output: <span id="water-machine-rate">0</span>/s</div>
+                <div>Special: <span id="water-machine-special">None</span></div>
+                <div>Build Cost: Leaves 18, Nectar 6</div>
+                <div>Upgrade Cost: <span id="water-machine-upgrade">Water 20, Meat 10</span></div>
+                <button onclick="buildMachine('water')">Build Machine</button>
+                <button onclick="upgradeMachine('water')">Upgrade Machine</button>
+            </article>
+            <article class="machine-card">
+                <h3>🍃 Leaf Recycler</h3>
+                <div>Status: <span id="leaves-machine-status">Locked</span></div>
+                <div>Level: <span id="leaves-machine-level">0</span></div>
+                <div>Output: <span id="leaves-machine-rate">0</span>/s</div>
+                <div>Special: <span id="leaves-machine-special">None</span></div>
+                <div>Build Cost: Water 15, Eggs 4</div>
+                <div>Upgrade Cost: <span id="leaves-machine-upgrade">Leaves 18, Water 10</span></div>
+                <button onclick="buildMachine('leaves')">Build Machine</button>
+                <button onclick="upgradeMachine('leaves')">Upgrade Machine</button>
+            </article>
+            <article class="machine-card">
+                <h3>🍯 Nectar Distiller</h3>
+                <div>Status: <span id="nectar-machine-status">Locked</span></div>
+                <div>Level: <span id="nectar-machine-level">0</span></div>
+                <div>Output: <span id="nectar-machine-rate">0</span>/s</div>
+                <div>Special: <span id="nectar-machine-special">None</span></div>
+                <div>Build Cost: Leaves 20, Water 14</div>
+                <div>Upgrade Cost: <span id="nectar-machine-upgrade">Nectar 18, Eggs 5</span></div>
+                <button onclick="buildMachine('nectar')">Build Machine</button>
+                <button onclick="upgradeMachine('nectar')">Upgrade Machine</button>
+            </article>
+        </div>
+    </section>
+
+    <section id="log" class="log"></section>
+
+    <script src="game.js"></script>
+</body>
+</html>

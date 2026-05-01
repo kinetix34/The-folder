@@ -1,0 +1,199 @@
+﻿body {
+    background: radial-gradient(circle at top, #4e3623 0%, #241809 55%, #120b07 100%);
+    color: #f5e7cf;
+    font-family: 'Segoe UI', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 24px;
+}
+
+header {
+    text-align: center;
+    max-width: 980px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: clamp(2rem, 4vw, 3rem);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+header p {
+    margin: 12px auto 0;
+    color: #dcc9b2;
+    max-width: 760px;
+    line-height: 1.6;
+}
+
+#game-ui {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 14px;
+    background: rgba(50, 33, 20, 0.88);
+    padding: 24px;
+    border-radius: 18px;
+    margin-top: 24px;
+    width: min(100%, 980px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 18px 70px rgba(0, 0, 0, 0.22);
+}
+
+#status-grid,
+#resource-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 18px;
+    width: min(100%, 980px);
+    margin-top: 24px;
+}
+
+.status-card {
+    background: linear-gradient(180deg, rgba(90, 58, 35, 0.96), rgba(48, 28, 16, 0.96));
+    padding: 22px 20px;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 16px 42px rgba(0, 0, 0, 0.18);
+    backdrop-filter: blur(4px);
+}
+
+.status-card h2 {
+    margin: 0 0 14px;
+    font-size: 1.15rem;
+}
+
+.status-card div {
+    margin: 8px 0;
+    font-size: 0.98rem;
+}
+
+.stat {
+    background: rgba(255, 255, 255, 0.06);
+    padding: 16px 18px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 0.97rem;
+    font-weight: 700;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+}
+
+section {
+    width: min(100%, 980px);
+    margin-top: 24px;
+}
+
+section h2 {
+    margin-bottom: 18px;
+    font-size: 1.35rem;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 10px;
+}
+
+#colony-map,
+#machine-panel {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+}
+
+.building,
+.machine-card {
+    background: linear-gradient(180deg, rgba(85, 55, 40, 0.95), rgba(57, 32, 20, 0.95));
+    padding: 22px 18px;
+    text-align: center;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.18);
+    min-height: 130px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+}
+
+.building:hover,
+.machine-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 255, 255, 0.18);
+    box-shadow: 0 20px 52px rgba(0, 0, 0, 0.24);
+}
+
+.building span,
+.machine-card span {
+    display: block;
+    font-size: 0.9rem;
+    color: #d7c4a7;
+    opacity: 0.85;
+}
+
+.building.wide {
+    min-height: 120px;
+}
+
+.machine-card {
+    cursor: default;
+    text-align: left;
+}
+
+.machine-card h3 {
+    margin: 0 0 12px;
+    font-size: 1.1rem;
+}
+
+.machine-card div {
+    margin: 4px 0;
+    font-size: 0.95rem;
+}
+
+.machine-card button {
+    width: 100%;
+    margin-top: 10px;
+    padding: 12px 14px;
+    border: none;
+    border-radius: 12px;
+    font-size: 0.98rem;
+    cursor: pointer;
+    background: #81674a;
+    color: #fff;
+    transition: background 0.18s ease, transform 0.18s ease;
+}
+
+.machine-card button:hover {
+    background: #a3865b;
+    transform: translateY(-2px);
+}
+
+.log {
+    margin-top: 24px;
+    width: min(100%, 980px);
+    background: rgba(33, 21, 12, 0.82);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    padding: 20px;
+    min-height: 110px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.log-entry {
+    color: #ffe8c4;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    opacity: 0.95;
+}
+
+@media (max-width: 720px) {
+    body {
+        padding: 16px;
+    }
+
+    .building,
+    .machine-card {
+        min-height: 120px;
+    }
+}

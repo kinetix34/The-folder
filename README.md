@@ -1,8 +1,8 @@
-# Kinetix 1.6
+# Kinetix 1.7
 ## Whats new?
-- Design mass update
-- Getting local gxmes (Bitlife, Eagler, etc.)
+- New link to use
+- Local games (# here)
 ## Usage
-Netlify/Vercel, etc. link coming soon. Should be released by Ki 2
+[Netlify Link](https://kin3tix34.netlify.app)
 ## Notes
 This site is totally intended for learning, not anything uneducational like games.
