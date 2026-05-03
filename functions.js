@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const settings = {
         particles: true,
         glow: true,
-        midnight: true,
         background: true,
         hover: true,
         autoAnim: true,
@@ -75,13 +74,6 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('glow-toggle').addEventListener('change', function(e) {
             settings.glow = e.target.checked;
             toggleGlow();
-            saveSettings();
-        });
-
-        // Midnight theme toggle
-        document.getElementById('midnight-toggle').addEventListener('change', function(e) {
-            settings.midnight = e.target.checked;
-            toggleMidnightTheme();
             saveSettings();
         });
 
@@ -207,7 +199,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateSettingsUI() {
         document.getElementById('particles-toggle').checked = settings.particles;
         document.getElementById('glow-toggle').checked = settings.glow;
-        document.getElementById('midnight-toggle').checked = settings.midnight;
         document.getElementById('background-toggle').checked = settings.background;
         document.getElementById('hover-toggle').checked = settings.hover;
         document.getElementById('auto-anim-toggle').checked = settings.autoAnim;
@@ -219,7 +210,6 @@ document.addEventListener('DOMContentLoaded', function() {
         // Apply current settings
         toggleParticles();
         toggleGlow();
-        toggleMidnightTheme();
         toggleBackground();
         toggleHoverEffects();
         toggleAutoAnimations();
@@ -227,4 +217,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize on page load
     updateSettingsUI();
+
+// kinetix 1.8
+function loadIframe() {
+    console.log('loadIframe called');
+    var iframe = document.getElementById('targetIframe');
+    if (iframe) {
+        var src = iframe.getAttribute('data-src');
+        console.log('Opening in new window:', src);
+        window.open(src, '_blank');
+    } else {
+        console.error('Iframe not found');
+    }
+}
+
 });
