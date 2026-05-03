@@ -7,21 +7,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Settings state
     const settings = {
+        theme: 'ocean',
+        customTheme: {
+            bg: 'linear-gradient(180deg, #08101d 0%, #0f141e 100%)',
+            surface: '#0c1422',
+            text: '#eef4ff',
+            accent: '#5e7bff',
+            border: '#ffffff'
+        },
         particles: true,
-        glow: true,
-        background: true,
-        hover: true,
-        autoAnim: true,
         particleCount: 30  // Default particle count
     };
 
     // Load settings from localStorage
     loadSettings();
 
-    // Function to fade in a section
+    // Function to fade in a section and update sidebar navigation state
     function showSection(sectionId) {
         sections.forEach(section => {
             section.classList.remove('active');
+        });
+
+        navLinks.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === `#${sectionId}`);
         });
 
         const targetSection = document.getElementById(sectionId);
@@ -36,6 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             const targetId = this.getAttribute('href').substring(1);
             showSection(targetId);
+            window.location.hash = `#${targetId}`;
         });
     });
 
@@ -51,55 +60,99 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeParticles();
     initializeSettings();
 
-    // Settings toggle handlers
+    // Settings handlers
     function initializeSettings() {
-        // Particles toggle
-        document.getElementById('particles-toggle').addEventListener('change', function(e) {
-            settings.particles = e.target.checked;
-            toggleParticles();
-            saveSettings();
+        const themeButtons = document.querySelectorAll('.theme-card');
+        themeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const selectedTheme = this.dataset.theme;
+                if (!selectedTheme) return;
+                settings.theme = selectedTheme;
+                applyTheme(selectedTheme);
+                updateSettingsUI();
+                saveSettings();
+            });
         });
 
-        // Particle count slider
-        document.getElementById('particle-count').addEventListener('input', function(e) {
-            settings.particleCount = parseInt(e.target.value);
-            document.getElementById('particle-count-value').textContent = settings.particleCount;
-            if (settings.particles) {
-                initializeParticles(); // Recreate particles with new count
-            }
-            saveSettings();
-        });
+        // Custom theme editor
+        const applyCustomBtn = document.getElementById('apply-custom-theme');
+        const resetCustomBtn = document.getElementById('reset-custom-theme');
 
-        // Glow toggle
-        document.getElementById('glow-toggle').addEventListener('change', function(e) {
-            settings.glow = e.target.checked;
-            toggleGlow();
-            saveSettings();
-        });
+        if (applyCustomBtn) {
+            applyCustomBtn.addEventListener('click', function() {
+                settings.customTheme.bg = document.getElementById('custom-bg').value;
+                settings.customTheme.surface = document.getElementById('custom-surface').value;
+                settings.customTheme.text = document.getElementById('custom-text').value;
+                settings.customTheme.accent = document.getElementById('custom-accent').value;
+                settings.customTheme.border = document.getElementById('custom-border').value;
+                settings.theme = 'custom';
+                applyTheme('custom');
+                updateSettingsUI();
+                saveSettings();
+            });
+        }
 
-        // Background animation toggle
-        document.getElementById('background-toggle').addEventListener('change', function(e) {
-            settings.background = e.target.checked;
-            toggleBackground();
-            saveSettings();
-        });
+        if (resetCustomBtn) {
+            resetCustomBtn.addEventListener('click', function() {
+                settings.customTheme = {
+                    bg: 'linear-gradient(180deg, #08101d 0%, #0f141e 100%)',
+                    surface: '#0c1422',
+                    text: '#eef4ff',
+                    accent: '#5e7bff',
+                    border: '#ffffff'
+                };
+                document.getElementById('custom-bg').value = settings.customTheme.bg;
+                document.getElementById('custom-surface').value = settings.customTheme.surface;
+                document.getElementById('custom-text').value = settings.customTheme.text;
+                document.getElementById('custom-accent').value = settings.customTheme.accent;
+                document.getElementById('custom-border').value = settings.customTheme.border;
+                settings.theme = 'custom';
+                applyTheme('custom');
+                updateSettingsUI();
+                saveSettings();
+            });
+        }
 
-        // Hover effects toggle
-        document.getElementById('hover-toggle').addEventListener('change', function(e) {
-            settings.hover = e.target.checked;
-            toggleHoverEffects();
-            saveSettings();
-        });
-
-        // Auto animations toggle
-        document.getElementById('auto-anim-toggle').addEventListener('change', function(e) {
-            settings.autoAnim = e.target.checked;
-            toggleAutoAnimations();
-            saveSettings();
-        });
-
-        // Set initial states
+        applyTheme(settings.theme);
         updateSettingsUI();
+    }
+
+    function applyTheme(theme) {
+        document.body.classList.remove('theme-ocean', 'theme-forest', 'theme-beach', 'theme-sunset', 'theme-sunrise', 'theme-moonlight', 'theme-raspberry', 'theme-simplelight', 'theme-custom');
+        if (theme === 'custom') {
+            applyCustomTheme();
+        } else {
+            document.body.classList.add(`theme-${theme}`);
+        }
+    }
+
+    function applyCustomTheme() {
+        document.body.classList.add('theme-custom');
+        document.documentElement.style.setProperty('--body-bg', settings.customTheme.bg);
+        document.documentElement.style.setProperty('--surface', settings.customTheme.surface + 'e6'); // Add alpha
+        document.documentElement.style.setProperty('--surface-strong', settings.customTheme.surface + 'f8');
+        document.documentElement.style.setProperty('--text', settings.customTheme.text);
+        document.documentElement.style.setProperty('--accent', settings.customTheme.accent);
+        document.documentElement.style.setProperty('--border', settings.customTheme.border + '14'); // Add alpha
+    }
+
+    function updateSettingsUI() {
+        document.querySelectorAll('.theme-card').forEach(card => {
+            card.classList.toggle('selected', card.dataset.theme === settings.theme);
+        });
+        // Show/hide custom theme editor
+        const editor = document.getElementById('custom-theme-editor');
+        if (editor) {
+            editor.style.display = settings.theme === 'custom' ? 'block' : 'none';
+        }
+        // Populate custom theme inputs if custom theme is selected
+        if (settings.theme === 'custom') {
+            document.getElementById('custom-bg').value = settings.customTheme.bg;
+            document.getElementById('custom-surface').value = settings.customTheme.surface;
+            document.getElementById('custom-text').value = settings.customTheme.text;
+            document.getElementById('custom-accent').value = settings.customTheme.accent;
+            document.getElementById('custom-border').value = settings.customTheme.border;
+        }
     }
 
     // Particle effects
@@ -197,22 +250,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updateSettingsUI() {
-        document.getElementById('particles-toggle').checked = settings.particles;
-        document.getElementById('glow-toggle').checked = settings.glow;
-        document.getElementById('background-toggle').checked = settings.background;
-        document.getElementById('hover-toggle').checked = settings.hover;
-        document.getElementById('auto-anim-toggle').checked = settings.autoAnim;
-
-        // Update particle count slider
-        document.getElementById('particle-count').value = settings.particleCount;
-        document.getElementById('particle-count-value').textContent = settings.particleCount;
-
-        // Apply current settings
-        toggleParticles();
-        toggleGlow();
-        toggleBackground();
-        toggleHoverEffects();
-        toggleAutoAnimations();
+        document.querySelectorAll('.theme-card').forEach(card => {
+            card.classList.toggle('selected', card.dataset.theme === settings.theme);
+        });
     }
 
     // Initialize on page load
